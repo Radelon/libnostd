@@ -28,6 +28,26 @@
 #endif
 
 
+#if LIBCOM_WANT_ERR
+LIBCOM_SCOPE void err(int, const char *, ...);
+#endif /* LIBCOM_WANT_ERR */
+
+
+#if LIBCOM_WANT_ERRX
+LIBCOM_SCOPE void errx(int, const char *, ...);
+#endif /* LIBCOM_WANT_ERRX */
+
+
+#if LIBCOM_WANT_WARN
+LIBCOM_SCOPE void warn(const char *, ...) {
+#endif /* LIBCOM_WANT_WARN */
+
+
+#if LIBCOM_WANT_WARNX
+LIBCOM_SCOPE void warnx(const char *, ...) {
+#endif /* LIBCOM_WANT_WARNX */
+
+
 #if LIBCOM_STATIC
 #include <com/err.c>
 #endif
