@@ -1,6 +1,8 @@
 #ifndef LIBCOM_COM_ERRNO_H
 #define LIBCOM_COM_ERRNO_H
 
+#include <errno.h>		/* errno */
+
 
 #if _WIN32
 #if !defined errno
