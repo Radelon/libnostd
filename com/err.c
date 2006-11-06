@@ -12,6 +12,8 @@
 #include <stdarg.h>	/* va_list va_start va_end */
 #include <stdlib.h>	/* exit(3) */
 
+#include <string.h>	/* strerror(3) */
+
 #include <errno.h>
 
 #endif
