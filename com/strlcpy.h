@@ -5,7 +5,7 @@
 
 #include <stddef.h>	/* size_t */
 
-#if !defined __OpenBSD__ && !defined HAVE_STRLCPY
+#if !defined __OpenBSD__ && !defined __NetBSD__ && !defined __FreeBSD__ && !defined HAVE_STRLCPY
 LIBCOM_SCOPE size_t strlcpy(char *, const char *, size_t);
 #endif
 
