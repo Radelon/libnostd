@@ -1,0 +1,8 @@
+#ifndef LIBCOM_COM_ALLOCA_H
+#define LIBCOM_COM_ALLOCA_H
+
+
+#define LIBCOM_HAVE_ALLOCA	1
+
+
+#endif /* LIBCOM_COM_ALLOCA_H */

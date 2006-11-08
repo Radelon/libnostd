@@ -1,7 +1,31 @@
 #ifndef LIBCOM_COM_TIME_H
 #define LIBCOM_COM_TIME_H
 
-#include <sys/time.h>		/* timerclear timerisset timeradd timersub timercmp */
+#include <sys/time.h>		/* struct timeval timerclear timerisset timeradd timersub timercmp */
+
+#include <com/alloca.h>		/* alloca() */
+
+
+/*
+ * timerset: helper routine for setting/instantiating struct timeval objects.
+ *
+ * TODO: Be smarter about alloca() use. Fallback to static (or thread-local)
+ * object ring buffer.
+ */
+static struct timeval *timerset(long sec, long usec, struct timeval *tvp) {
+	tvp->tv_sec	= sec;
+	tvp->tv_usec	= usec;
+
+	return tvp;
+} /* timerset() */
+
+#if !defined timerset_
+#define timerset_(sec, usec, tvbuf, ...)	timerset(sec, usec, ((tvbuf == 0)? alloca(sizeof (struct timeval)) : tvbuf))
+#endif
+
+#if !defined timerset
+#define timerset(sec, ...)	timerset_(sec, __VA_ARGS__, (struct timeval *)0)
+#endif
 
 
 #if !defined timerclear
