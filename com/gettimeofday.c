@@ -12,7 +12,7 @@
 struct timezone;
 
 
-int gettimeofday(struct timeval *tv, struct timezone *tz) {
+LIBCOM_SCOPE int gettimeofday(struct timeval *tv, struct timezone *tz) {
 	struct _timeb tb;
 
 	if (tv == 0)
