@@ -5,6 +5,8 @@
 
 #include <sys/time.h>		/* struct timeval */
 
+#include <com/gettimeofday.h>
+
 #if _WIN32
 
 #include <sys/timeb.h>
@@ -12,7 +14,7 @@
 struct timezone;
 
 
-LIBCOM_SCOPE int gettimeofday(struct timeval *tv, struct timezone *tz) {
+LIBCOM_GETTIMEOFDAY_SCOPE int gettimeofday(struct timeval *tv, struct timezone *tz) {
 	struct _timeb tb;
 
 	if (tv == 0)

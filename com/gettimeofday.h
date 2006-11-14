@@ -5,13 +5,19 @@
 
 #include <sys/time.h>		/* struct timeval gettimeofday(3) */
 
+
+#ifndef LIBCOM_GETTIMEOFDAY_SCOPE
+#define LIBCOM_GETTIMEOFDAY_SCOPE	LIBCOM_SCOPE
+#endif
+
+
 #if _WIN32
 
 #include <sys/timeb.h>		/* struct timeval */
 
 struct timezone;
 
-LIBCOM_SCOPE int gettimeofday(struct timeval *, struct timezone *);
+LIBCOM_GETTIMEOFDAY_SCOPE int gettimeofday(struct timeval *, struct timezone *);
 
 #endif /* _WIN32 */
 
