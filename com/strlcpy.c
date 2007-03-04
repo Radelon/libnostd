@@ -21,6 +21,8 @@
 
 #include <com/config.h>
 
+#include <com/strlcpy.h>
+
 #include <sys/types.h>
 #include <string.h>
 
@@ -29,7 +31,7 @@
  * will be copied.  Always NUL terminates (unless siz == 0).
  * Returns strlen(src); if retval >= siz, truncation occurred.
  */
-LIBCOM_SCOPE size_t
+LIBCOM_STRLCPY_SCOPE size_t
 strlcpy(char *dst, const char *src, size_t siz)
 {
 	char *d = dst;

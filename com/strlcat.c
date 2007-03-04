@@ -21,6 +21,8 @@
 
 #include <com/config.h>
 
+#include <com/strlcat.h>
+
 #include <sys/types.h>
 #include <string.h>
 
@@ -31,7 +33,7 @@
  * Returns strlen(src) + MIN(siz, strlen(initial dst)).
  * If retval >= siz, truncation occurred.
  */
-LIBCOM_SCOPE size_t
+LIBCOM_STRLCAT_SCOPE size_t
 strlcat(char *dst, const char *src, size_t siz)
 {
 	char *d = dst;

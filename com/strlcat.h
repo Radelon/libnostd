@@ -5,8 +5,13 @@
 
 #include <stddef.h>	/* size_t */
 
+
+#ifndef LIBCOM_STRLCAT_SCOPE
+#define LIBCOM_STRLCAT_SCOPE	LIBCOM_SCOPE
+#endif
+
 #if !defined __OpenBSD__ && !defined HAVE_STRLCAT
-LIBCOM_SCOPE size_t strlcat(char *, const char *, size_t);
+LIBCOM_STRLCAT_SCOPE size_t strlcat(char *, const char *, size_t);
 #endif
 
 
