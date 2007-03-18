@@ -1,5 +1,8 @@
+#include <string/strlcpy.h>
 
 #if WANT_STRLCPY_C99
+#ifndef HAVE_STRLCPY_C99
+#define HAVE_STRLCPY_C99
 
 /*
  * Copyright (c) 1998 Todd C. Miller <Todd.Miller@courtesan.com>
@@ -25,6 +28,9 @@
  * will be copied.  Always NUL terminates (unless siz == 0).
  * Returns strlen(src); if retval >= siz, truncation occurred.
  */
+#if LIBCOM_STATIC
+static
+#endif
 size_t
 strlcpy(char *dst, const char *src, size_t siz)
 {
@@ -52,4 +58,5 @@ strlcpy(char *dst, const char *src, size_t siz)
 }
 
 
+#endif /* HAVE_STRLCPY_C99 */
 #endif /* WANT_STRLCPY_C99 */

@@ -1,6 +1,8 @@
+#include <err/err.h>
 
 #if WANT_ERR_C99
-
+#ifndef HAVE_ERR_C99
+#define HAVE_ERR_C99
 
 #include <stdio.h>	/* vsnprintf(3) */
 #include <stdarg.h>	/* va_list va_start va_end */
@@ -121,4 +123,5 @@ void vwarnx(const char *fmt, va_list args) {
 } /* vwarnx() */
 
 
+#endif /* HAVE_ERR_C99 */
 #endif /* WANT_ERR_C99 */

@@ -20,9 +20,17 @@
 
 #include <stddef.h>	/* size_t */
 
+#if LIBCOM_STATIC
+static
+#endif
 size_t strlcat(char *, const char *, size_t);
 
 #endif /* WANT_STRLCAT_C99 */
+
+
+#if LIBCOM_STATIC
+#include <string/strlcat.c>
+#endif
 
 
 #endif /* STRING_STRLCAT_H */

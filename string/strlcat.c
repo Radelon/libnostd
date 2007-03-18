@@ -1,5 +1,8 @@
+#include <string/strlcat.h>
 
 #if WANT_STRLCAT_C99
+#ifndef HAVE_STRLCAT_C99
+#define HAVE_STRLCAT_C99
 
 /*
  * Copyright (c) 1998 Todd C. Miller <Todd.Miller@courtesan.com>
@@ -29,6 +32,9 @@
  * Returns strlen(src) + MIN(siz, strlen(initial dst)).
  * If retval >= siz, truncation occurred.
  */
+#if LIBCOM_STATIC
+static
+#endif
 size_t
 strlcat(char *dst, const char *src, size_t siz)
 {
@@ -57,4 +63,5 @@ strlcat(char *dst, const char *src, size_t siz)
 	return(dlen + (s - src));	/* count does not include NUL */
 }
 
+#endif /* HAVE_STRLCAT_C99 */
 #endif /* WANT_STRLCAT_C99 */

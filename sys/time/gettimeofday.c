@@ -1,7 +1,6 @@
-
+#include <sys/time/gettimeofday.h>
 
 #if WANT_GETTIMEOFDAY_WIN32
-
 #ifndef HAVE_GETTIMEOFDAY_WIN32
 #define HAVE_GETTIMEOFDAY_WIN32
 
@@ -25,5 +24,4 @@ int gettimeofday(struct timeval *tv, struct timezone *tz) {
 
 
 #endif /* HAVE_GETTIMEOFDAY_WIN32 */
-
 #endif /* WANT_GETTIMEOFDAY_WIN32 */
