@@ -22,6 +22,9 @@
 
 #include <sys/time.h>	/* struct timeval */
 
+
+struct timezone;
+
 int gettimeofday(struct timeval *, struct timezone *);
 
 #endif /* WANT_GETTIMEOFDAY_WIN32 */
