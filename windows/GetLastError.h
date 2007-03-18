@@ -5,7 +5,7 @@
 #if HAVE_GETLASTERROR || _WIN32
 #define WANT_GETLASTERROR_WIN32
 #else
-#define WANT_GETLASTERROR_COMPAT
+#define WANT_GETLASTERROR_C99
 #endif
 
 
@@ -16,13 +16,13 @@
 #endif /* WANT_GETLASTERROR_WIN32 */
 
 
-#if WANT_GETLASTERROR_COMPAT
+#if WANT_GETLASTERROR_C99
 
 #include <errno.h>	/* errno */
 
 #define GetLastError()	errno
 
-#endif /* WANT_GETLASTERROR_COMPAT */
+#endif /* WANT_GETLASTERROR_C99 */
 
 
 #endif /* WINDOWS_GETLASTERROR_H */

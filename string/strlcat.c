@@ -1,5 +1,5 @@
 
-#if WANT_STRLCAT_COMPAT
+#if WANT_STRLCAT_C99
 
 /*
  * Copyright (c) 1998 Todd C. Miller <Todd.Miller@courtesan.com>
@@ -57,4 +57,4 @@ strlcat(char *dst, const char *src, size_t siz)
 	return(dlen + (s - src));	/* count does not include NUL */
 }
 
-#endif /* WANT_STRLCAT_BSD */
+#endif /* WANT_STRLCAT_C99 */

@@ -5,7 +5,7 @@
 #if HAVE_STRLCAT || __OpenBSD__ || __NetBSD__ || __FreeBSD__
 #define WANT_STRLCAT_BSD
 #else
-#define WANT_STRLCAT_COMPAT
+#define WANT_STRLCAT_C99
 #endif
 
 
@@ -16,13 +16,13 @@
 #endif /* WANT_STRLCAT_BSD */
 
 
-#if WANT_STRLCAT_COMPAT
+#if WANT_STRLCAT_C99
 
 #include <stddef.h>	/* size_t */
 
 size_t strlcat(char *, const char *, size_t);
 
-#endif /* WANT_STRLCAT_COMPAT */
+#endif /* WANT_STRLCAT_C99 */
 
 
 #endif /* STRING_STRLCAT_H */

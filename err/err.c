@@ -1,5 +1,5 @@
 
-#if WANT_ERR_COMPAT
+#if WANT_ERR_C99
 
 
 #include <stdio.h>	/* vsnprintf(3) */
@@ -120,4 +120,4 @@ void vwarnx(const char *fmt, va_list args) {
 } /* vwarnx() */
 
 
-#endif /* WANT_ERR_COMPAT */
+#endif /* WANT_ERR_C99 */

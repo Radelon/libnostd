@@ -1,5 +1,5 @@
 
-#if WANT_STRLCPY_COMPAT
+#if WANT_STRLCPY_C99
 
 /*
  * Copyright (c) 1998 Todd C. Miller <Todd.Miller@courtesan.com>
@@ -52,4 +52,4 @@ strlcpy(char *dst, const char *src, size_t siz)
 }
 
 
-#endif /* WANT_STRLCPY_COMPAT */
+#endif /* WANT_STRLCPY_C99 */

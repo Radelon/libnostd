@@ -5,7 +5,7 @@
 #if HAVE_ERR || __OpenBSD__ || __FreeBSD__ || __NetBSD__ || defined __linux__
 #define WANT_ERR_BSD
 #else
-#define WANT_ERR_COMPAT
+#define WANT_ERR_C99
 #endif
 
 
@@ -16,7 +16,7 @@
 #endif /* WANT_ERR_BSD */
 
 
-#if WANT_ERR_COMPAT
+#if WANT_ERR_C99
 
 #include <stdarg.h>	/* va_list */
 
@@ -37,7 +37,7 @@ void warnx(const char *, ...) {
 
 void vwarnx(const char *, va_list) {
 
-#endif /* WANT_ERR_COMPAT */
+#endif /* WANT_ERR_C99 */
 
 
 #endif /* ERR_ERR_H */
