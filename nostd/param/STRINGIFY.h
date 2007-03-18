@@ -1,5 +1,5 @@
-#ifndef STDC_STRINGIFY_H
-#define STDC_STRINGIFY_H
+#ifndef NOSTD_PARAM_STRINGIFY_H
+#define NOSTD_PARAM_STRINGIFY_H
 
 
 #if !defined STRINGIFY
@@ -8,4 +8,4 @@
 #endif
 
 
-#endif /* STDC_STRINGIFY_H */
+#endif /* NOSTD_PARAM_STRINGIFY_H */
