@@ -32,4 +32,4 @@
 #endif /* WANT_SYS_PARAM_MINMAX_WIN32 */
 
 
-#endif /* SYS_PARAM_MINMAX_H
+#endif /* SYS_PARAM_MINMAX_H */
