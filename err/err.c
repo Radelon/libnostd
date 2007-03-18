@@ -8,7 +8,8 @@
 
 #include <string.h>	/* strerror(3) */
 
-#include <errno.h>
+#include <errno/GetLastError.h>
+#include <errno/SetLastError.h>
 
 
 #ifndef ERR_ERR_C_BUFSIZ
@@ -28,7 +29,7 @@ void err(int retcode, const char *fmt, ...) {
 
 
 void verr(int retcode, const char *fmt, va_list args) {
-	int sys_errno	= errno;
+	int sys_errno	= GetLastError();
 	char buf[ERR_ERR_C_BUFSIZ];
 
 	(void)vsnprintf(buf, sizeof buf, fmt, args);
@@ -51,7 +52,7 @@ void errx(int retcode, const char *fmt, ...) {
 
 
 void verrx(int retcode, const char *fmt, va_list args) {
-	int sys_errno	= errno;
+	int sys_errno	= GetLastError();
 	char buf[ERR_ERR_C_BUFSIZ];
 
 	(void)vsnprintf(buf, sizeof buf, fmt, args);
@@ -76,7 +77,7 @@ void warn(const char *fmt, ...) {
 
 
 void vwarn(const char *fmt, va_list args) {
-	int sys_errno	= errno;
+	int sys_errno	= GetLastError();
 	char buf[ERR_ERR_C_BUFSIZ];
 
 	(void)vsnprintf(buf, sizeof buf, fmt, args);
@@ -85,7 +86,7 @@ void vwarn(const char *fmt, va_list args) {
 
 	fflush(stderr);
 
-	errno	= sys_errno;
+	SetLastError(sys_errno);
 
 	return /* void */;
 } /* vwarn() */
@@ -105,7 +106,7 @@ void warnx(const char *fmt, ...) {
 
 
 void vwarnx(const char *fmt, va_list args) {
-	int sys_errno	= errno;
+	int sys_errno	= GetLastError();
 	char buf[ERR_ERR_C_BUFSIZ];
 
 	(void)vsnprintf(buf, sizeof buf, fmt, args);
@@ -114,7 +115,7 @@ void vwarnx(const char *fmt, va_list args) {
 
 	fflush(stderr);
 
-	errno	= sys_errno;
+	SetLastError(errno);
 
 	return /* void */;
 } /* vwarnx() */
