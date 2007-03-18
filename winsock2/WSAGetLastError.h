@@ -1,0 +1,28 @@
+#ifndef WINDOWS_WSAGETLASTERROR_H
+#define WINDOWS_WSAGETLASTERROR_H
+
+
+#if HAVE_WSAGETLASTERROR || _WIN32
+#define WANT_WSAGETLASTERROR_WIN32
+#else
+#define WANT_WSAGETLASTERROR_C99
+#endif
+
+
+#if WANT_WSAGETLASTERROR_WIN32
+
+#include <winsock2.h>	/* WSAGetLastError() */
+
+#endif /* WANT_WSAGETLASTERROR_WIN32 */
+
+
+#if WANT_WSAGETLASTERROR_C99
+
+#include <errno.h>	/* errno */
+
+#define WSAGetLastError()	errno
+
+#endif /* WANT_WSAGETLASTERROR_C99 */
+
+
+#endif /* WINDOWS_WSAGETLASTERROR_H */
