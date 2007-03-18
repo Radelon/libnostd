@@ -3,9 +3,9 @@
 
 
 #if HAVE_STRLCAT || __OpenBSD__ || __NetBSD__ || __FreeBSD__
-#define WANT_STRLCAT_BSD
+#define WANT_STRLCAT_BSD	1
 #else
-#define WANT_STRLCAT_C99
+#define WANT_STRLCAT_C99	1
 #endif
 
 

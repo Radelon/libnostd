@@ -3,9 +3,9 @@
 
 
 #if HAVE_ERR || __OpenBSD__ || __FreeBSD__ || __NetBSD__ || defined __linux__
-#define WANT_ERR_BSD
+#define WANT_ERR_BSD	1
 #else
-#define WANT_ERR_C99
+#define WANT_ERR_C99	1
 #endif
 
 

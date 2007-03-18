@@ -3,9 +3,9 @@
 
 
 #if HAVE_STRLCPY || __OpenBSD__ || __NetBSD__ || __FreeBSD__
-#define WANT_STRLCPY_BSD
+#define WANT_STRLCPY_BSD	1
 #else
-#define WANT_STRLCPY_C99
+#define WANT_STRLCPY_C99	1
 #endif
 
 
