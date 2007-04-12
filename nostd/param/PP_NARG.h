@@ -2,8 +2,8 @@
 #define NOSTD_PARAM_PP_NARG_H
 
 /*
- * The PP_NARG macro returns the number of arguments that have been passed
- * to it.
+ * The PP_NARG macro evaluates to the number of arguments that have been
+ * passed to it.
  *
  * PP_NARG(A) -> 1
  * PP_NARG(A,B) -> 2
