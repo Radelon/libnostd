@@ -42,4 +42,4 @@
 #endif /* WANT_SYS_PARAM_BITMAP_WIN32 */
 
 
-#endif /* SYS_PARAM_BITMAP_H
+#endif /* SYS_PARAM_BITMAP_H */
