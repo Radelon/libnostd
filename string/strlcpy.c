@@ -28,7 +28,7 @@
  * will be copied.  Always NUL terminates (unless siz == 0).
  * Returns strlen(src); if retval >= siz, truncation occurred.
  */
-#if LIBCOM_STATIC
+#if LIBNOSTD_STATIC
 static
 #endif
 size_t

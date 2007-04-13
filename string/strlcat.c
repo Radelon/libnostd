@@ -32,7 +32,7 @@
  * Returns strlen(src) + MIN(siz, strlen(initial dst)).
  * If retval >= siz, truncation occurred.
  */
-#if LIBCOM_STATIC
+#if LIBNOSTD_STATIC
 static
 #endif
 size_t
