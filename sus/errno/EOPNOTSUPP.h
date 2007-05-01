@@ -1,7 +1,7 @@
 #ifndef ERRNO_EOPNOTSUPP_H
 #define ERRNO_EOPNOTSUPP_H
 
-#include <errno.h>	/* EOPNOTSUPP ENOTSUP EINVAL */
+#include_next <errno.h>	/* EOPNOTSUPP ENOTSUP EINVAL */
 
 
 #if !defined EOPNOTSUPP
