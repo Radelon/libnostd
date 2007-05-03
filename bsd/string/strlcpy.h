@@ -1,5 +1,5 @@
-#ifndef STRING_STRLCPY_H
-#define STRING_STRLCPY_H
+#ifndef BSD_STRING_STRLCPY_H
+#define BSD_STRING_STRLCPY_H
 
 
 #if HAVE_STRLCPY || __OpenBSD__ || __NetBSD__ || __FreeBSD__
@@ -29,8 +29,8 @@ size_t strlcpy(char *, const char *, size_t);
 
 
 #if LIBNOSTD_STATIC
-#include <string/strlcpy.c>
+#include <bsd/string/strlcpy.c>
 #endif
 
 
-#endif /* STRING_STRLCPY_H */
+#endif /* BSD_STRING_STRLCPY_H */

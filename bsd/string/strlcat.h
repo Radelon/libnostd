@@ -1,5 +1,5 @@
-#ifndef STRING_STRLCAT_H
-#define STRING_STRLCAT_H
+#ifndef BSD_STRING_STRLCAT_H
+#define BSD_STRING_STRLCAT_H
 
 
 #if HAVE_STRLCAT || __OpenBSD__ || __NetBSD__ || __FreeBSD__
@@ -29,8 +29,8 @@ size_t strlcat(char *, const char *, size_t);
 
 
 #if LIBNOSTD_STATIC
-#include <string/strlcat.c>
+#include <bsd/string/strlcat.c>
 #endif
 
 
-#endif /* STRING_STRLCAT_H */
+#endif /* BSD_STRING_STRLCAT_H */
