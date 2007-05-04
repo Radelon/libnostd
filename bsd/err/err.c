@@ -1,4 +1,7 @@
-#include <err/err.h>
+#ifndef BSD_ERR_ERR_C
+#define BSD_ERR_ERR_C
+
+#include <bsd/err/err.h>
 
 #if WANT_ERR_C99
 #ifndef HAVE_ERR_C99
@@ -10,8 +13,8 @@
 
 #include <string.h>	/* strerror(3) */
 
-#include <errno/GetLastError.h>
-#include <errno/SetLastError.h>
+#include <win32/windows/GetLastError.h>
+#include <win32/windows/SetLastError.h>
 
 
 #ifndef ERR_ERR_C_BUFSIZ
@@ -125,3 +128,5 @@ void vwarnx(const char *fmt, va_list args) {
 
 #endif /* HAVE_ERR_C99 */
 #endif /* WANT_ERR_C99 */
+
+#endif /* !BSD_ERR_ERR_C */

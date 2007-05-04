@@ -1,5 +1,5 @@
-#ifndef ERR_ERR_H
-#define ERR_ERR_H
+#ifndef BSD_ERR_ERR_H
+#define BSD_ERR_ERR_H
 
 
 #if HAVE_ERR || __OpenBSD__ || __FreeBSD__ || __NetBSD__ || defined __linux__
@@ -40,4 +40,4 @@ void vwarnx(const char *, va_list) {
 #endif /* WANT_ERR_C99 */
 
 
-#endif /* ERR_ERR_H */
+#endif /* BSD_ERR_ERR_H */
