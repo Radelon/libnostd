@@ -1,6 +1,8 @@
 #ifndef COMPAT_ERRNO_H
 #define COMPAT_ERRNO_H
 
-#include <sys/errno.h>
+#include <sus/errno.h>
+
+#include_next <errno.h>
 
 #endif /* !COMPAT_ERRNO_H */

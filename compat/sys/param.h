@@ -5,4 +5,8 @@
 
 #include <nostd/sys/param.h>
 
+#if !_WIN32
+#include_next <sys/param.h>
+#endif
+
 #endif /* !COMPAT_SYS_PARAM_H */

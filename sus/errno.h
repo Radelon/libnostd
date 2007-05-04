@@ -1,8 +1,8 @@
 #ifndef SUS_ERRNO_H
 #define SUS_ERRNO_H
 
-#include <sys/errno/ENOTSUP.h>
-#include <sys/errno/EOPNOTSUPP.h>
+#include <sus/errno/ENOTSUP.h>
+#include <sus/errno/EOPNOTSUPP.h>
 
 #include_next <errno.h>
 
