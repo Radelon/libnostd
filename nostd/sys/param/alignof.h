@@ -1,5 +1,5 @@
-#ifndef NOSTD_PARAM_ALIGNOF_H
-#define NOSTD_PARAM_ALIGNOF_H
+#ifndef NOSTD_SYS_PARAM_ALIGNOF_H
+#define NOSTD_SYS_PARAM_ALIGNOF_H
 
 #include <stddef.h>	/* offsetof */
 
@@ -33,4 +33,4 @@
 #endif /* !defined alignof && !defined HAVE_ALIGNOF */
 
 
-#endif /* NOSTD_PARAM_ALIGNOF_H */
+#endif /* !NOSTD_SYS_PARAM_ALIGNOF_H */

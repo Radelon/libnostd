@@ -1,5 +1,5 @@
-#ifndef NOSTD_PARAM_PP_NARG_H
-#define NOSTD_PARAM_PP_NARG_H
+#ifndef NOSTD_SYS_PARAM_PP_NARG_H
+#define NOSTD_SYS_PARAM_PP_NARG_H
 
 /*
  * The PP_NARG macro evaluates to the number of arguments that have been
@@ -34,4 +34,4 @@
 	19,18,17,16,15,14,13,12,11,10, \
 	9,8,7,6,5,4,3,2,1,0 
 
-#endif /* NOSTD_PARAM_PP_NARG_H */
+#endif /* !NOSTD_SYS_PARAM_PP_NARG_H */

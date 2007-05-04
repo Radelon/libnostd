@@ -1,5 +1,5 @@
-#ifndef NOSTD_PARAM_ARRAYLEN_H
-#define NOSTD_PARAM_ARRAYLEN_H
+#ifndef NOSTD_SYS_PARAM_ARRAYLEN_H
+#define NOSTD_SYS_PARAM_ARRAYLEN_H
 
 
 #if !defined arraylen
@@ -14,4 +14,4 @@
 #endif /* arraylen */
 
 
-#endif /* NOSTD_PARAM_ARRAYLEN_H */
+#endif /* !NOSTD_SYS_PARAM_ARRAYLEN_H */
