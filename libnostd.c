@@ -1,5 +1,5 @@
 
-#include <sys/time/gettimeofday.c>
-#include <string/strlcpy.c>
-#include <string/strlcat.c>
-#include <err/err.c>
+#include <bsd/sys/time/gettimeofday.c>
+#include <bsd/string/strlcpy.c>
+#include <bsd/string/strlcat.c>
+#include <bsd/err/err.c>
