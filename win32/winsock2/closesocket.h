@@ -18,10 +18,9 @@
 
 #if WANT_CLOSESOCKET_SUSv3
 
-#include <sys/types.h>
-#include <sys/socket.h>	/* SHUT_RDWR shutdown(2) */
+#include <unistd.h>	/* close(2) */
 
-#define closesocket(s)	shutdown((s), SHUT_RDWR)
+#define closesocket(s)	close((s))
 
 #endif /* WANT_CLOSESOCKET_SUSv3 */
 
