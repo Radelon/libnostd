@@ -3,6 +3,6 @@
 
 #include_next <errno.h>
 
-#include <sus/errno.h>
+#include <posix/errno.h>
 
 #endif /* !COMPAT_ERRNO_H */
