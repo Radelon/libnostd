@@ -39,7 +39,11 @@
 #if !HAVE_STRLCAT
 
 #ifndef XSTRLCAT_LOOSE
+#if defined(__APPLE__)
+#define XSTRLCAT_LOOSE	1
+#else
 #define XSTRLCAT_LOOSE	0
+#endif
 #endif
 
 #include <stddef.h>	/* size_t */
@@ -58,9 +62,9 @@ static inline size_t xstrlcat(char *dst, const char *src, size_t lim) {
 	char *d		= memchr(dst, '\0', lim);
 #else
 	/*
-	 * However, implementors more often optimize strlen() than memchr(),
-	 * and it's not clear whether one can reach the aforementioned
-	 * condition legitimately.
+	 * However, implementors (like Apple) more often optimize strlen()
+	 * than memchr(), and it's not clear whether one can reach the
+	 * aforementioned condition legitimately.
    	 */
 	char *d		= &dst[(lim)? strlen(dst) : 0];
 #endif
