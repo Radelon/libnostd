@@ -2,39 +2,44 @@
 #define BSD_SYS_TIME_GETTIMEOFDAY_H
 
 
-#if HAVE_GETTIMEOFDAY
-#define WANT_GETTIMEOFDAY_BSD	1
-#elif _WIN32
-#define WANT_GETTIMEOFDAY_WIN32	1
+#if _WIN32
+#include <sys/time.h>
 #else
-#define WANT_GETTIMEOFDAY_BSD	1
+#include_next <sys/time.h>
 #endif
 
 
-#if WANT_GETTIMEOFDAY_BSD
+#ifndef HAVE_GETTIMEOFDAY
+#if _WIN32
+#define HAVE_GETTIMEOFDAY	0
+#else
+#define HAVE_GETTIMEOFDAY	1
+#endif
+#endif 
 
-#include <sys/time.h>	/* struct timeval gettimeofday(2) */
 
-#endif /* WANT_GETTIMEOFDAY_BSD */
-
-
-#if WANT_GETTIMEOFDAY_WIN32
-
-#include <sys/time.h>	/* struct timeval */
-
+#if !HAVE_GETTIMEOFDAY
 
 struct timezone;
 
-#if LIBNOSTD_STATIC
-static
-#endif
-int gettimeofday(struct timeval *, struct timezone *);
+#include <sys/timeb.h>	/* struct _timeb _ftime() */
 
-#if LIBNOSTD_STATIC
-#include <bsd/sys/time/gettimeofday.c>
-#endif
 
-#endif /* WANT_GETTIMEOFDAY_WIN32 */
+static int gettimeofday(struct timeval *tv, struct timezone *tz) {
+	struct _timeb tb;
+
+	if (tv == 0)
+		return -1;
+
+	_ftime(&tb);
+
+	tv->tv_sec	= tb.time;
+	tv->tv_usec	= (int)tb.millitm * 1000;
+
+	return 0;
+} /* gettimeofday() */
+
+#endif /* !HAVE_GETTIMEOFDAY */
 
 
 #endif /* BSD_SYS_TIME_GETTIMEOFDAY_H */
