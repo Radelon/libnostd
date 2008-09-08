@@ -177,16 +177,16 @@ static inline uint32_t arc4random_(int op, volatile int locked, ...) {
 		rnd.pid	^= getpid();
 #endif
 
-#if defined CTL_KERN && defined KERN_RANDOM && defined RANDOM_UUID
+#if __linux
 		{
 			int mib[] = { CTL_KERN, KERN_RANDOM, RANDOM_UUID };
 			unsigned char uuid[128];
-			int len;
+			size_t len, n;
 
 			for (len = 0; len < sizeof uuid; len += n) {
 				n	= sizeof uuid - len;
 
-				if (0 != sysctl(mib, sizeof mib / sizeof mib[0], &n, (void *)0, 0))
+				if (0 != sysctl(mib, sizeof mib / sizeof mib[0], &uuid[len], &n, (void *)0, 0))
 					break;
 			}
 
