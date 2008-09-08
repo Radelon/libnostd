@@ -26,6 +26,19 @@
 #ifndef BSD_STDLIB_ARC4RANDOM_H
 #define BSD_STDLIB_ARC4RANDOM_H
 
+#ifndef HAVE_ARC4RANDOM
+#if defined __OpenBSD__	\
+ || defined __FreeBSD__	\
+ || defined __NetBSD__	\
+ || defined __APPLE__
+#define HAVE_ARC4RANDOM	1
+#else
+#define HAVE_ARC4RANDOM	0
+#endif
+#endif
+
+#if !HAVE_ARC4RANDOM
+
 #if !_WIN32
 #include <stdint.h>	/* uint32_t */
 #endif
@@ -48,7 +61,7 @@
 
 #if _REENTRANT
 #if _WIN32
-#include <windows.h>	/* CriticalSection InitializeCriticalSection() EnterCriticalSection() LeaveCriticalSection() InterlockedCompareExchange() InterlockedExchange() */
+#include <windows.h>	/* CRITICAL_SECTION InitializeCriticalSection() EnterCriticalSection() LeaveCriticalSection() InterlockedCompareExchange() InterlockedExchange() */
 #else
 #include <pthread.h>	/* pthread_mutex_t pthread_mutex_lock(3) pthread_mutex_unlock(3) */
 #endif
@@ -71,7 +84,7 @@ static inline uint32_t arc4random_(int op, volatile int locked, ...) {
 #if _REENTRANT
 		struct {
 			volatile LONG init;
-			CriticalSection cs;
+			CRITICAL_SECTION cs;
 		} mux;
 #if _WIN32
 #else
@@ -119,7 +132,7 @@ static inline uint32_t arc4random_(int op, volatile int locked, ...) {
 		volatile LONG init;
 
 		do {
-			switch (init = InterlockedCompareExchange(&arc4.mux.init, 1, 0)) {
+			switch (init = InterlockedCompareExchange((LONG *)&arc4.mux.init, 1, 0)) {
 			case 2: /* initialized already. */
 				break;
 			case 1: /* try again. */
@@ -129,7 +142,7 @@ static inline uint32_t arc4random_(int op, volatile int locked, ...) {
 			case 0: /* must initialize. */
 				InitializeCriticalSection(&arc4.mux.cs);
 
-				InterlockedExchange(&arc4.mux.init, 2);
+				InterlockedExchange((LONG *)&arc4.mux.init, 2);
 
 				break;
 			}
@@ -189,7 +202,7 @@ static inline uint32_t arc4random_(int op, volatile int locked, ...) {
 			HMODULE lib	= 0;
 			HCRYPTPROV ctx	= 0;
 			struct {
-				BOOL (*acquire)(HCRYPTPROV *, LPCTSTR, LPCTSTR, DWORD, DWORD);
+				BOOL (*acquire)(HCRYPTPROV *, LPCSTR, LPCSTR, DWORD, DWORD);
 				BOOL (*genrandom)(HCRYPTPROV, DWORD, BYTE *);
 				BOOL (*release)(HCRYPTPROV, DWORD);
 			} crypt;
@@ -198,7 +211,7 @@ static inline uint32_t arc4random_(int op, volatile int locked, ...) {
 			if (!(lib = LoadLibrary(TEXT("ADVAPI32.DLL"))))
 				goto unload;
 
-			if (!(crypt.acquire = (BOOL (*)())GetProcAddress(lib, "CryptAcquireContext"))
+			if (!(crypt.acquire = (BOOL (*)())GetProcAddress(lib, "CryptAcquireContextA"))
 			||  !(crypt.genrandom = (BOOL (*)())GetProcAddress(lib, "CryptGenRandom"))
 			||  !(crypt.release = (BOOL (*)())GetProcAddress(lib, "CryptReleaseContext")))
 				goto unload;
@@ -233,7 +246,7 @@ stir:
 		 * discard at least 768, but w'ever.
 		 */
 		for (n = 0; n < (256 / 4); n++)
-			arc4random_(ARC4_RANDOM);
+			arc4random_(ARC4_RANDOM, locked);
 
 		break;
 	}
@@ -244,7 +257,7 @@ stir:
 		int len, n;
 		unsigned char si;
 
-		va_start(ap, op);
+		va_start(ap, locked);
 
 		rnd	= va_arg(ap, unsigned char *);
 		len	= va_arg(ap, int);
@@ -322,4 +335,31 @@ stir:
 #define arc4random()			arc4random_(ARC4_RANDOM, 0)
 
 
-#endif /* BSD_STDLIB_ARC4RANDOM_H */
+#endif /* !HAVE_ARC4RANDOM */
+
+#endif /* !BSD_STDLIB_ARC4RANDOM_H */
+
+
+#if 0
+#include <stdio.h>	/* printf(3) */
+#include <ctype.h>	/* isdigit(3) */
+
+int main(int argc, char *argv[]) {
+	unsigned long rnd;
+	unsigned long i, n = 1600000;
+
+	if (argc > 1) {
+		for (n = 0; isdigit(*argv[1]); argv[1]++) {
+			n	*= 10;
+			n	+= *argv[1] - '0';
+		}
+	}
+
+	for (i = 0; i < n; i++)
+		printf("%lu\n", (unsigned long)arc4random());
+
+	return 0;
+} /* main() */
+
+#endif
+
