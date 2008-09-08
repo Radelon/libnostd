@@ -82,11 +82,11 @@ static inline uint32_t arc4random_(int op, volatile int locked, ...) {
 		unsigned char i, j;
 		int c;
 #if _REENTRANT
+#if _WIN32
 		struct {
 			volatile LONG init;
 			CRITICAL_SECTION cs;
 		} mux;
-#if _WIN32
 #else
 		pthread_mutex_t mux;
 #endif
@@ -345,7 +345,6 @@ stir:
 #include <ctype.h>	/* isdigit(3) */
 
 int main(int argc, char *argv[]) {
-	unsigned long rnd;
 	unsigned long i, n = 1600000;
 
 	if (argc > 1) {
