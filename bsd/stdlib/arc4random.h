@@ -68,9 +68,11 @@
 #endif
 
 
-#define ARC4_STIR	0
-#define ARC4_ADDRANDOM	1
-#define ARC4_RANDOM	2
+#define ARC4_STIR		0
+#define ARC4_ADDRANDOM		1
+#define ARC4_RANDOM		2
+#define ARC4_RANDOM_BUF		3
+#define ARC4_RANDOM_UNIFORM	4
 
 #if _WIN32
 static inline unsigned long arc4random_(int op, volatile int locked, ...) {
@@ -253,13 +255,13 @@ stir:
 
 	case ARC4_ADDRANDOM: {
 		va_list ap;
-		unsigned char *rnd;
+		unsigned char *src;
 		int len, n;
 		unsigned char si;
 
 		va_start(ap, locked);
 
-		rnd	= va_arg(ap, unsigned char *);
+		src	= va_arg(ap, unsigned char *);
 		len	= va_arg(ap, int);
 
 		va_end(ap);
@@ -275,7 +277,7 @@ stir:
 		for (n = 0; n < 256; n++) {
 			arc4.i	= (arc4.i + 1) % 256;
 			si	= arc4.s[arc4.i];
-			arc4.j	= (arc4.j + si + rnd[n % len]) % 256;
+			arc4.j	= (arc4.j + si + src[n % len]) % 256;
 
 			arc4.s[arc4.i]	= arc4.s[arc4.j];
 			arc4.s[arc4.j]	= si;
@@ -313,6 +315,36 @@ stir:
 		break;
 	}
 
+	case ARC4_RANDOM_BUF: {
+		va_list ap;
+		unsigned char *dst;
+		size_t lim;
+
+		va_start(ap, locked);
+
+		dst	= va_arg(ap, unsigned char *);
+		lim	= va_arg(ap, size_t);
+
+		va_end(ap);
+
+		while (lim > 0) {
+			uint32_t r	= arc4random_(ARC4_RANDOM, locked);
+
+			switch (lim % 4) {
+			case 0:
+				dst[--lim]	= (r >> 24U);
+			case 3:
+				dst[--lim]	= (r >> 16U);
+			case 2:
+				dst[--lim]	= (r >> 8U);
+			case 1:
+				dst[--lim]	= (r >> 0U);
+			} /* switch (lim % 4) */
+		} /* while (lim) */
+
+		break;
+	}
+
 	default:
 		break;
 	} /* switch (op) */
@@ -333,19 +365,73 @@ stir:
 #define arc4random_stir()		arc4random_(ARC4_STIR, 0)
 #define arc4random_addrandom(p, n)	arc4random_(ARC4_ADDRANDOM, 0, (p), (n))
 #define arc4random()			arc4random_(ARC4_RANDOM, 0)
+#define arc4random_buf(p, n)		arc4random_(ARC4_RANDOM_BUF, 0, (p), (n))
 
+#ifndef HAVE_ARC4RANDOM_BUF
+#define HAVE_ARC4RANDOM_BUF	1
+#endif
+
+#ifndef HAVE_ARC4RANDOM_UNIFORM
+#define HAVE_ARC4RANDOM_UNIFORM	1
+#endif
 
 #endif /* !HAVE_ARC4RANDOM */
+
+
+#ifndef HAVE_ARC4RANDOM_BUF
+#if defined __OpenBSD__
+
+#include <sys/param.h>	/* OpenBSD */
+
+#if OpenBSD >= 200811
+#define HAVE_ARC4RANDOM_BUF	1
+#else
+#define HAVE_ARC4RANDOM_BUF	0
+#endif
+
+#else
+#define HAVE_ARC4RANDOM_BUF	0
+#endif
+#endif
+
+#if !HAVE_ARC4RANDOM_BUF
+
+#include <stddef.h>	/* size_t */
+
+static inline void arc4random_buf(void *dst, size_t lim) {
+		while (lim > 0) {
+			unsigned long r	= arc4random();
+
+			switch (lim % 4) {
+			case 0:
+				((unsigned char *)dst)[--lim]	= (r >> 24U);
+			case 3:
+				((unsigned char *)dst)[--lim]	= (r >> 16U);
+			case 2:
+				((unsigned char *)dst)[--lim]	= (r >> 8U);
+			case 1:
+				((unsigned char *)dst)[--lim]	= (r >> 0U);
+			} /* switch (lim % 4) */
+		} /* while (lim) */
+} /* arc4random_buf() */
+
+#endif /* !HAVE_ARC4RANDOM_BUF */
+
 
 #endif /* !BSD_STDLIB_ARC4RANDOM_H */
 
 
 #if 0
+
+void *malloc(size_t);
+void free(void *);
+
 #include <stdio.h>	/* printf(3) */
 #include <ctype.h>	/* isdigit(3) */
 
 int main(int argc, char *argv[]) {
-	unsigned long i, n = 1600000;
+	unsigned long i, j, n = 1600000;
+	unsigned char *p;
 
 	if (argc > 1) {
 		for (n = 0; isdigit(*argv[1]); argv[1]++) {
@@ -356,6 +442,34 @@ int main(int argc, char *argv[]) {
 
 	for (i = 0; i < n; i++)
 		printf("%lu\n", (unsigned long)arc4random());
+
+	if (argc > 2) {
+		for (n = 0; isdigit(*argv[2]); argv[2]++) {
+			n	*= 10;
+			n	+= *argv[2] - '0';
+		}
+	} else
+		n	= 0xffff & arc4random();
+
+	p	= malloc(n);
+
+	arc4random_buf(p, n);
+
+	for (i = 0; i < n;) {
+		char hex[16]	= "0123456789abcdef";
+		char ln[56];
+
+		for (j = 0; i < n && j < 16; j++, i++) {
+			ln[(j * 3) + 0]	= hex[0x0f & (p[i] >> 4)];
+			ln[(j * 3) + 1]	= hex[0x0f & (p[i] >> 0)];
+			ln[(j * 3) + 2]	= ' ';
+		}
+
+		fwrite(ln, 3, j, stdout);
+		fputc('\n', stdout);
+	}
+
+	free(p);
 
 	return 0;
 } /* main() */
