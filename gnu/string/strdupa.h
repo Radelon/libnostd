@@ -42,7 +42,7 @@
 
 #define strdupa(src) (__extension__ ({			\
 	size_t len_	= strlen(src);			\
-	char *dst_	= __bultin_alloca(len_ + 1);	\
+	char *dst_	= __builtin_alloca(len_ + 1);	\
 	dst_[len_]	= '\0';				\
 	(char *)memcpy(dst_, src, len_);		\
 }))
