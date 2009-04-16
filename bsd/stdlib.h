@@ -10,4 +10,7 @@
 
 #include <bsd/stdlib/arc4random.h>
 
+#include <bsd/stdlib/getprogname.h>
+
+
 #endif /* BSD_STDLIB_H */
