@@ -381,9 +381,9 @@ stir:
 #ifndef HAVE_ARC4RANDOM_BUF
 #if defined __OpenBSD__
 
-#include <sys/param.h>	/* OpenBSD */
+#include <sys/param.h>	/* OpenBSD, __FreeBSD_version */
 
-#if OpenBSD >= 200811
+#if OpenBSD >= 200811 || __FreeBSD_version >= 800107
 #define HAVE_ARC4RANDOM_BUF	1
 #else
 #define HAVE_ARC4RANDOM_BUF	0
