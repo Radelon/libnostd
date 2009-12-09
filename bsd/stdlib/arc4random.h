@@ -379,7 +379,7 @@ stir:
 
 
 #ifndef HAVE_ARC4RANDOM_BUF
-#if defined __OpenBSD__
+#if defined __OpenBSD__ || defined __FreeBSD__
 
 #include <sys/param.h>	/* OpenBSD, __FreeBSD_version */
 
