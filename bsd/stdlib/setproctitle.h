@@ -4,7 +4,7 @@
 #ifndef HAVE_SETPROCTITLE
 #if defined __FreeBSD__ \
  || defined __NetBSD__  \
- || defined __APPLE__
+ || defined __OpenBSD__
 #define HAVE_SETPROCTITLE 1
 #else
 #define HAVE_SETPROCTITLE 0
@@ -16,7 +16,7 @@
 
 #if __GNUC__
 
-void setproctitle(const char *, ...) __attribute__((format (printf 1, 2)));
+void setproctitle(const char *, ...) __attribute__((format (printf, 1, 2)));
 
 #endif
 
