@@ -13,5 +13,7 @@
 
 #include <bsd/stdlib/getprogname.h>
 
+#include <bsd/stdlib/setproctitle.h>
+
 
 #endif /* BSD_STDLIB_H */
