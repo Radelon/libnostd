@@ -29,12 +29,12 @@
 
 #include <stddef.h>	/* NULL size_t */
 #include <stdarg.h>	/* va_list va_start va_end */
-#include <stdlib.h>	/* malloc(3) setenv(3) clearenv(3) setproctitle(3) */
+#include <stdlib.h>	/* malloc(3) setenv(3) clearenv(3) setproctitle(3) getprogname(3) */
 #include <stdio.h>	/* vsnprintf(3) snprintf(3) */
 
 #include <string.h>	/* strlen(3) strchr(3) strdup(3) memset(3) memcpy(3) */
 
-#include <errno.h>	/* errno */
+#include <errno.h>	/* errno program_invocation_name program_invocation_short_name */
 
 
 #if !defined(HAVE_SETPROCTITLE)
@@ -146,7 +146,7 @@ static int spt_copyargs(int argc, char *argv[]) {
 void spt_init() __attribute__((constructor));
 
 void spt_init(int argc, char *argv[], char *envp[]) {
-	char *base, *end, *nul;
+	char *base, *end, *nul, *tmp;
 	int i, error;
 
 	if (!(base = argv[0]))
@@ -170,7 +170,25 @@ void spt_init(int argc, char *argv[], char *envp[]) {
 	}
 
 	if (!(SPT.arg0 = strdup(argv[0])))
-		{ error = errno; goto error; }
+		goto syerr;
+
+#if __GLIBC__
+	if (!(tmp = strdup(program_invocation_name)))
+		goto syerr;
+
+	program_invocation_name = tmp;
+
+	if (!(tmp = strdup(program_invocation_short_name)))
+		goto syerr;
+
+	program_invocation_short_name = tmp;
+#elif __APPLE__
+	if (!(tmp = strdup(getprogname())))
+		goto syerr;
+
+	setprogname(tmp);
+#endif
+
 
 	if ((error = spt_copyenv(envp)))
 		goto error;
@@ -183,6 +201,8 @@ void spt_init(int argc, char *argv[], char *envp[]) {
 	SPT.end  = end;
 
 	return;
+syerr:
+	error = errno;
 error:
 	SPT.error = error;
 } /* spt_init() */
