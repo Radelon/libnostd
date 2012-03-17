@@ -143,7 +143,7 @@ static int spt_copyargs(int argc, char *argv[]) {
 } /* spt_copyargs() */
 
 
-void spt_init() __attribute__((constructor));
+void spt_init(int argc, char *argv[], char *envp[]) __attribute__((constructor));
 
 void spt_init(int argc, char *argv[], char *envp[]) {
 	char *base, *end, *nul, *tmp;

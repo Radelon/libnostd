@@ -18,10 +18,11 @@
 
 void setproctitle(const char *, ...) __attribute__((format (printf, 1, 2)));
 
-#endif
+#else
 
 void setproctitle(const char *, ...);
 
+#endif
 
 #endif /* !HAVE_SETPROCTITLE */
 
