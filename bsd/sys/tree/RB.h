@@ -96,7 +96,7 @@ struct {								\
 } while (0)
 
 #ifndef RB_AUGMENT
-#define RB_AUGMENT(x)
+#define RB_AUGMENT(x)	do {} while (0)
 #endif
 
 #define RB_ROTATE_LEFT(head, elm, tmp, field) do {			\
